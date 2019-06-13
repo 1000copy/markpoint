@@ -1,0 +1,242 @@
+<style>
+textarea{
+	width: 50%;
+}
+iframe{
+	width: 50%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+.Container {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    background-color: #ff0;
+    min-height: 100vh;
+}
+.SideBar {
+    -ms-flex: 1 1;
+    flex: 1 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #363636;
+    max-width: 100px;
+    min-width: 100px;
+    padding: 0;
+}
+.SideMenu>div.Active a {
+    color: #fff;
+    background-color: #2f2f2f;
+}
+.SideMenu > div:hover a
+{
+  background-color: #d84146;
+  color:white;
+}
+
+.SideMenu>div a {
+    display: block;
+    padding: 20px;
+    text-align: center;
+    min-width: 100vw;
+}
+.SideMenu a {
+    text-decoration: none;
+}
+.SideMenu, .SideMenu a {
+    color: #999;
+    font-size: 14px;
+}
+.LogoBox, .SideBar {
+    -ms-flex: 1 1;
+    flex: 1 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.SideMenu {
+    margin: 0;
+    padding: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex: 5 1;
+    flex: 5 1;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}	
+.SectionBar {
+    background-color: #f2f2f2;
+    -ms-flex: 2 1;
+    flex: 2 1;
+    max-width: 200px;
+    min-width: 200px;
+    border-right: 1px solid #ccc;
+}
+.WorkingBox {
+    background-color: #f2f2f2;
+    -ms-flex: 4 1;
+    flex: 4 1;
+    display: -ms-flexbox;
+    display: flex;
+}
+.LogoText {
+    color: #fff;
+    font-size: 20px;
+}
+</style>
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div class="App">
+	    <div class="Container">
+	        <div class="SideBar">
+	            <div class="LogoBox">
+	                <!-- <h4 class="LogoText">MarkPoint</h4> -->
+	                <img src="blackcat.png" style="width: 100px;height: 100px;"/>
+	                <h2 class="LogoText">三脚猫演示</h2>
+
+	            </div>
+	            <div class="SideMenu">
+	                <div class="Active"><a href="#">编辑</a></div>
+	                <div><a href="#" onclick="doClip()">剪贴</a></div>
+	                <div><a href="#" onclick="dopdf()">PDF</a></div>
+	                <div><a href="#" onclick="doAbout()">关于</a></div>
+	            </div>
+	        </div>
+	        <div class="SectionBar">
+	            <div class="Editor Active">
+	                <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" viewBox="0 0 40 40" style="vertical-align: middle;">
+	                    <g>
+	                        <path d="m35.9 15v5h-5v11.6h-5v-11.6h-5v-5h15z m-31.8-8.4h21.8v5h-8.4v20h-5v-20h-8.4v-5z"></path>
+	                    </g>
+	                </svg>Markdown</div>
+	            <div class="Spacer">页面导航</div>
+	            <ul class="GuideList" id="GuideList">
+	            
+	            </ul>
+	        </div>
+	        <div class="WorkingBox">
+	        	<textarea id= "markdown" onkeyup="contentChange()"># title1
+- async
+
+# title
+- body
+
+# title
+- console
+	</textarea>
+	        	<iframe  style="width:60%;display:inline-block;" id = "myframe"
+	width="400" height="100%" marginheight="0" marginwidth="0" src="./markpoint.html">
+	  Fallback text here for unsupporting browsers, of which there are scant few.
+	</iframe>
+	        </div>
+
+	    </div>
+	</div>
+	<script type="text/javascript">
+		function contentChange(){
+			var markdown = document.getElementById("markdown")
+			var GuideList = document.getElementById("GuideList")
+			var v = markdown.value
+			GuideList.innerHTML = ''
+			var a = getTitles(v)
+			GuideList.innerHTML = guideList(a)
+			onmarkdownchange()
+		}
+		function guideList(titles){
+			var r = ''
+			for (var i = 0; i < titles.length; i++) {
+				var title = titles[i]
+				var t = `<li><a href="#" onclick='clicktitle("${title}");return false;'>${title}</a></li>`
+				r += t
+			}
+			return r
+		}
+		function getTitles(v){
+			var pages = v.split("#")
+			var results = []
+			for (var i = 1; i < pages.length; i++) {
+				var page = pages[i]
+				results.push(page.split("\n")[0])
+			}
+			return results
+		}
+		function clicktitle(title){
+			
+			var markdown = document.getElementById("markdown")
+			var start = markdown.value.indexOf(title)
+			var end =  start + title.length
+			markdown.focus()// 必须先设置焦点
+			// markdown.selectionStart = start
+			// markdown.selectionEnd = end
+			markdown.setSelectionRange(start,end)
+		}
+		var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+		var eventer = window[eventMethod];
+		var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+		// Listen to message from child window
+		eventer(messageEvent,function(e) {
+		  if (e.data == 'message1'){
+		  	console.log('iframe loaded')
+		  	// onmarkdownchange()
+		  }
+		},false);
+		function onmarkdownchange(){
+			
+			var frame = document.getElementById('myframe'); 
+			var markdown = document.getElementById('markdown')
+			var v = markdown.value // not same as previos line
+			frame.contentWindow.postMessage(v, '*');
+		}
+		contentChange()
+		function doClip(){
+			var markdown = document.getElementById("markdown")
+			copyStringToClipboard(markdown.value)
+			alert('copied into clipboard')
+		}
+		function copyStringToClipboard (str) {
+		   // Create new element
+		   var el = document.createElement('textarea');
+		   // Set value (string to be copied)
+		   el.value = str;
+		   // Set non-editable to avoid focus and move outside of view
+		   el.setAttribute('readonly', '');
+		   el.style = {position: 'absolute', left: '-9999px'};
+		   document.body.appendChild(el);
+		   // Select text inside element
+		   el.select();
+		   // Copy text to clipboard
+		   document.execCommand('copy');
+		   // Remove temporary element
+		   document.body.removeChild(el);
+		}
+		function dopdf(){
+			var markdown = document.getElementById('markdown')
+			var v = markdown.value // not same as previos line
+			// var data = {age: 10};
+			// sessionStorage.data = JSON.stringify(data);
+			// https://stackoverflow.com/questions/31315327/how-to-make-sure-that-a-popup-window-is-fully-loaded-when-using-postmessage-api
+			sessionStorage.data = v
+			var url = 'markpoint.html?print-pdf'
+			var w = window.open(url)
+		}
+		function doAbout(){
+			alert('By ChenCat')
+		}
+	</script>
+</body>

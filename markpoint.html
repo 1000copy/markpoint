@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			
+		</script>
+	</head>
+	<body>
+			
+			<div class="reveal">
+				<div class="slides" id="root">
+					<section data-markdown>
+# title
+
+	parent.postMessage("message1","*");
+	var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+	var eventer = window[eventMethod];
+	var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+	function a(){}
+					</section>
+				<section data-markdown>
+# title
+- b
+					</section>
+				<section data-markdown>
+# title
+- c
+					</section>
+				</div>
+			</div>
+
+		<script src="js/reveal.js"></script>
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			function init(){
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+				Reveal.initialize({
+				dependencies: [
+						{ src: 'plugin/markdown/marked.js' },
+						{ src: 'plugin/markdown/markdown.js' },
+						{ src: 'plugin/notes/notes.js', async: true },
+						{ src: 'plugin/highlight/highlight.js', async: true }
+					]
+				});
+			}
+			init()
+		</script>
+		<script type="text/javascript">
+// var markdown = `# title
+// - async
+// -----
+// # title
+// - body
+// -----
+// # title
+// - console`
+function MarkdownToArray(markdown){
+  return markdown.split('-----')
+}
+function MarkdownToArray(markdown){
+  var ms = markdown.split('\n#')
+  var i = 0
+  for (var i = 0; i < ms.length; i++) {
+  	if (i > 0) ms[i] = '#' + ms[i]
+  }
+  return ms
+}
+function b(markdown){
+
+	var ms = MarkdownToArray(markdown)
+	var root = document.getElementById('root')
+	root.innerHTML = ''
+	// var myNode = root
+	// while (myNode.firstChild) {
+	//     myNode.removeChild(myNode.firstChild);
+	// }
+	var i = 0 
+	ms.forEach(function(item){
+		// console.log(item)		
+		var e = a(item)
+		root.appendChild(e)
+		i ++ 
+	})
+	function a(md){
+		var elem = document.createElement('section')
+		
+		elem.setAttribute('data-markdown','')
+		// elem.setAttribute('data-markdown-parsed','false')
+		elem.innerHTML = md
+		// console.log(markdown)	
+		return elem
+	}
+	function refreshMarkdown(){
+	  var plugins = Reveal.getPlugins()
+	  var markdownPlugin = Reveal.getPlugin('markdown')
+	  markdownPlugin.processSlides()
+	  markdownPlugin.convertSlides()
+	  root.firstChild.setAttribute("class","present")
+	  Reveal.slide(Reveal.getIndices().h)
+	  // parent.postMessage("message1","*");
+	}
+	refreshMarkdown()
+
+}
+// b(markdown)
+// b(markdown)
+
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+// Listen to message from child window
+var abcurl 
+eventer(messageEvent,function(e) {
+  console.log('from parent',e.data.substring(0,4))
+  if (e.data.substring(0,4)=='/pdf'){
+  	console.log('from parent',String(e.data))
+  	location.href = e.data.substring(4)
+  }else if (e.data.substring(0,4)=='/ppt'){
+  	location.href = e.data.substring(4)
+  }
+  else{
+  	console.log(e.data)
+  	b(e.data)
+  }
+},false);
+// console.log(root,elem)
+window.addEventListener('load', function() {
+	var newData = sessionStorage.data
+	if(newData)
+		b(newData)
+});
+		</script>
+	</body>
+</html>

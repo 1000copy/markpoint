@@ -1,0 +1,80 @@
+<script type="text/javascript">
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+// Listen to message from child window
+eventer(messageEvent,function(e) {
+  if (e.data == 'message1'){
+  	console.log('iframe loaded')
+  	// onmarkdownchange()
+  }
+},false);
+function onmarkdownchange(){
+	
+	var frame = document.getElementById('myframe'); 
+	var markdown = document.getElementById('markdown')
+	var v = markdown.value // not same as previos line
+	frame.contentWindow.postMessage(v, '*');
+}
+function dopdf(){
+	
+	var frame = document.getElementById('myframe'); 
+	var markdown = document.getElementById('markdown')
+	frame.contentWindow.postMessage("/pdf"+'markpoint.html?print-pdf', '*');
+	onmarkdownchange()
+}
+function doppt(){
+	
+	var frame = document.getElementById('myframe'); 
+	var markdown = document.getElementById('markdown')
+	frame.contentWindow.postMessage("/ppt"+'markpoint.html', '*');
+	
+}
+// https://davidwalsh.name/window-iframe
+	// cors
+// 	document.querySelector("iframe").addEventListener("load", function() {
+
+//   this.style.backgroundColor = "red";
+//   alert(this.nodeName);
+//   	var x = document.getElementById("myframe");
+// 	var y = (x.contentWindow || x.contentDocument);
+// 	if (y.document)y = y.document;
+// 	y.body.style.backgroundColor = "red";
+// 	console.log(y)
+// 	var es = y.querySelector('body')
+// 	console.log(es.length)
+
+// });
+	
+</script>
+<style>
+	iframe {
+	  margin: 0 auto;
+	}
+	*{
+		margin: 0px;padding: 0px;
+		/*background-color: blue;*/
+		border: 1px;
+	}
+</style>
+<div style="width:100%;" >
+	<aside style="display:inline-block;width:30%;height:100%;padding: 0px;margin: 0px">	
+		<button onclick="onmarkdownchange()" style="height: 10%;width:100%;background-color: blue;">save</button>
+		<button onclick="dopdf()" style="height: 10%;width:100%;background-color: blue;">pdf</button>
+		<button onclick="doppt()" style="height: 10%;width:100%;background-color: blue;">ppt</button>
+		<textarea style="width:100%;height:70%;" id="markdown"># title1
+- async
+
+# title
+- body
+
+# title
+- console
+	</textarea>
+					</aside>	
+	<iframe  style="width:60%;display:inline-block;" id = "myframe"
+	width="400" height="100%" marginheight="0" marginwidth="0" src="./markpoint.html">
+	  Fallback text here for unsupporting browsers, of which there are scant few.
+	</iframe>
+</div>
