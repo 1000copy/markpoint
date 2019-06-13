@@ -1,104 +1,116 @@
-<style>
-textarea{
-	width: 50%;
-}
-iframe{
-	width: 50%;
-}
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
-.Container {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    background-color: #ff0;
-    min-height: 100vh;
-}
-.SideBar {
-    -ms-flex: 1 1;
-    flex: 1 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-    background-color: #363636;
-    max-width: 100px;
-    min-width: 100px;
-    padding: 0;
-}
-.SideMenu>div.Active a {
-    color: #fff;
-    background-color: #2f2f2f;
-}
-.SideMenu > div:hover a
-{
-  background-color: #d84146;
-  color:white;
-}
+<head>
+	<meta charset="UTF-8">
+	<title>MirrorMark - Simple, yet extensible.</title>
+	<!-- These three are required -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link href="markedit/css/mirrormark.package.css" rel="stylesheet" />
 
-.SideMenu>div a {
-    display: block;
-    padding: 20px;
-    text-align: center;
-    min-width: 100vw;
-}
-.SideMenu a {
-    text-decoration: none;
-}
-.SideMenu, .SideMenu a {
-    color: #999;
-    font-size: 14px;
-}
-.LogoBox, .SideBar {
-    -ms-flex: 1 1;
-    flex: 1 1;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-}
-.SideMenu {
-    margin: 0;
-    padding: 0;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex: 5 1;
-    flex: 5 1;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-}	
-.SectionBar {
-    background-color: #f2f2f2;
-    -ms-flex: 2 1;
-    flex: 2 1;
-    max-width: 200px;
-    min-width: 200px;
-    border-right: 1px solid #ccc;
-}
-.WorkingBox {
-    background-color: #f2f2f2;
-    -ms-flex: 4 1;
-    flex: 4 1;
-    display: -ms-flexbox;
-    display: flex;
-}
-.LogoText {
-    color: #fff;
-    font-size: 20px;
-}
-</style>
+	<style>
+		textarea{
+			width: 50%;
+		}
+		.editor{
+			width: 50%
+		}
+		iframe{
+			width: 50%;
+		}
+		body {
+		    margin: 0;
+		    padding: 0;
+		    font-family: sans-serif;
+		}
+		.Container {
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-direction: row;
+		    flex-direction: row;
+		    -ms-flex-align: stretch;
+		    align-items: stretch;
+		    background-color: #ff0;
+		    min-height: 100vh;
+		}
+		.SideBar {
+		    -ms-flex: 1 1;
+		    flex: 1 1;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-direction: column;
+		    flex-direction: column;
+		    -ms-flex-align: center;
+		    align-items: center;
+		    background-color: #363636;
+		    max-width: 100px;
+		    min-width: 100px;
+		    padding: 0;
+		}
+		.SideMenu>div.Active a {
+		    color: #fff;
+		    background-color: #2f2f2f;
+		}
+		.SideMenu > div:hover a
+		{
+		  background-color: #d84146;
+		  color:white;
+		}
+
+		.SideMenu>div a {
+		    display: block;
+		    padding: 20px;
+		    text-align: center;
+		    min-width: 100vw;
+		}
+		.SideMenu a {
+		    text-decoration: none;
+		}
+		.SideMenu, .SideMenu a {
+		    color: #999;
+		    font-size: 14px;
+		}
+		.LogoBox, .SideBar {
+		    -ms-flex: 1 1;
+		    flex: 1 1;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-direction: column;
+		    flex-direction: column;
+		    -ms-flex-align: center;
+		    align-items: center;
+		}
+		.SideMenu {
+		    margin: 0;
+		    padding: 0;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-direction: column;
+		    flex-direction: column;
+		    -ms-flex: 5 1;
+		    flex: 5 1;
+		    -ms-flex-pack: start;
+		    justify-content: flex-start;
+		}	
+		.SectionBar {
+		    background-color: #f2f2f2;
+		    -ms-flex: 2 1;
+		    flex: 2 1;
+		    max-width: 200px;
+		    min-width: 200px;
+		    border-right: 1px solid #ccc;
+		}
+		.WorkingBox {
+		    background-color: #f2f2f2;
+		    -ms-flex: 4 1;
+		    flex: 4 1;
+		    display: -ms-flexbox;
+		    display: flex;
+		}
+		.LogoText {
+		    color: #fff;
+		    font-size: 20px;
+		}
+		</style>
+	
+</head>
 <body>
 	<noscript>You need to enable JavaScript to run this app.</noscript>
 	<div class="App">
@@ -130,15 +142,14 @@ body {
 	            </ul>
 	        </div>
 	        <div class="WorkingBox">
-	        	<textarea id= "markdown" onkeyup="contentChange()"># title1
-- async
-
-# title
+	        	<div class="editor" >
+	        	<textarea id= "markdown"># title
 - body
 
 # title
 - console
 	</textarea>
+</div>
 	        	<iframe  style="width:60%;display:inline-block;" id = "myframe"
 	width="400" height="100%" marginheight="0" marginwidth="0" src="./markpoint.html">
 	  Fallback text here for unsupporting browsers, of which there are scant few.
@@ -148,14 +159,15 @@ body {
 	    </div>
 	</div>
 	<script type="text/javascript">
-		function contentChange(){
-			var markdown = document.getElementById("markdown")
+		function contentChange(html){
+			localStorage.data = html
+			console.log(localStorage.data)
 			var GuideList = document.getElementById("GuideList")
-			var v = markdown.value
+			var v = html
 			GuideList.innerHTML = ''
 			var a = getTitles(v)
 			GuideList.innerHTML = guideList(a)
-			onmarkdownchange()
+			onmarkdownchange(html)
 		}
 		function guideList(titles){
 			var r = ''
@@ -193,17 +205,18 @@ body {
 		eventer(messageEvent,function(e) {
 		  if (e.data == 'message1'){
 		  	console.log('iframe loaded')
-		  	// onmarkdownchange()
 		  }
 		},false);
-		function onmarkdownchange(){
+		function onmarkdownchange(html){
 			
+			
+			// var markdown = document.getElementById('markdown')
+			// var v = markdown.value // not same as previos line
+			var v = html
 			var frame = document.getElementById('myframe'); 
-			var markdown = document.getElementById('markdown')
-			var v = markdown.value // not same as previos line
 			frame.contentWindow.postMessage(v, '*');
 		}
-		contentChange()
+		
 		function doClip(){
 			var markdown = document.getElementById("markdown")
 			copyStringToClipboard(markdown.value)
@@ -225,13 +238,16 @@ body {
 		   // Remove temporary element
 		   document.body.removeChild(el);
 		}
+		var t 
 		function dopdf(){
-			var markdown = document.getElementById('markdown')
-			var v = markdown.value // not same as previos line
+			// var markdown = document.getElementById('markdown')
+			// var v = markdown.value // not same as previos line
 			// var data = {age: 10};
-			// sessionStorage.data = JSON.stringify(data);
+			// localStorage.data = JSON.stringify(data);
 			// https://stackoverflow.com/questions/31315327/how-to-make-sure-that-a-popup-window-is-fully-loaded-when-using-postmessage-api
-			sessionStorage.data = v
+			localStorage.data = t.cm.getValue()
+			// localStorage.setItem('pdf',t.cm.getValue())
+			console.log('pdf',t.cm.getValue())
 			var url = 'markpoint.html?print-pdf'
 			var w = window.open(url)
 		}
@@ -239,4 +255,17 @@ body {
 			alert('By ChenCat')
 		}
 	</script>
-</body>
+	<script src="markedit/js/mirrormark.package.js"></script>
+
+	<script>
+		t = mirrorMark(document.getElementById("markdown"), { autofocus: true });
+		t.render();
+		t.cm.on('change', function () {
+	        html = t.cm.getValue();
+	        // console.log(html)
+	        contentChange(html)
+	    })
+	    localStorage.clear()
+	    html = t.cm.getValue();
+		contentChange(html)
+	</script>

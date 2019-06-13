@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MirrorMark - Simple, yet extensible.</title>
+	<!-- Custom fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+
+	<!-- These three are required -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link href="./css/mirrormark.package.css" rel="stylesheet" />
+
+	<!-- Our demo CSS -->
+	<link href="./css/demo.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="wrap bgg05 tac">
+	<h1 style="margin-bottom: 1.5%">MirrorMark - Simple, yet extensible.</h1>
+	<p>Built on the sheer power of the amazing <a href="http://codemirror.net/" class="btn" style="margin-left: .5%">CodeMirror</a></p>
+</div>
+<div class="wrap bgg1">
+<div class="editor">
+<textarea id="textarea1" placeholder="things">
+# This is a main heading
+## This is a sub heading
+### This is a sub sub heading
+
+This is a normal Paragraph for bald headed people with no beards.
+
+**This text is bold** (Cmd-B)
+*Italicized* for you Italians (Cmd-I)
+~~Strikethrough~~ for those who like it!
+
+> and this is a Blockquote (Cmd-')
+
+We have lists: (Cmd-Alt-L)
+
+1. Here
+2. Here
+3. and Here
+
+We have bullets: (Cmd-L)
+
+* Pew
+* Pew
+* and Pew!
+
+Look how simple it is!
+```javascript
+textarea1 = mirrorMark(document.getElementById("textarea1"), { autofocus: true });
+textarea1.render();
+```
+
+[We have links](http://cdn.meme.am/instances/500x/54432752.jpg) (Cmd-K)
+
+We even have images (Cmd-Alt-I)
+![Markdown Everywhere](http://troll.me/images/toy-story-everywhere/markdown-markdown-everywhere.jpg)
+
+<table>
+	<tr>
+		<td>Embedded Html</td>
+	</tr>
+</table>
+
+And notice those sneaky preview and fullscreen buttons?
+</textarea>
+</div>
+</div>
+<div class="wrap bgg05 tac">
+	<h2>Another Textarea</h2>
+</div>
+<div class="wrap bgg1">
+<div class="editor">
+<textarea id="textarea2">
+## This is another textarea proving that we can have multiple ones!
+Also notice those extra icons? Those were created like this:
+
+```javascript
+var customActions = {
+	"potatoes": function potatoes() {
+		this.insert('![](https://33.media.tumblr.com/0de5ab0292ffc8dc7813e07978f89734/tumblr_n2patsaCTX1tvizo2o1_500.gif)');
+	},
+	"neverGoingToGiveYouUp": function neverGoingToGiveYouUp() {
+		this.insert([
+			"## You know you love it!",
+			'<iframe width="420" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>',
+		]);
+	}
+}
+
+var customKeyMaps = {
+	// We magicically replace Cmd with Ctrl if you are normal and don't use a Mac
+	"Shift-Cmd-Alt-1": "potatoes",
+	"Shift-Cmd-Alt-1": "neverGoingToGiveYouUp",
+};
+
+var customTools = [{
+	name: "more-actions",
+	action: null,
+	className: "fa fa-fighter-jet",
+	// Hey look, dropdowns
+	nested: [
+		{ name: "Click me!", action: "potatoes",showName: true },
+		{ name: "No, click me!", action: "neverGoingToGiveYouUp", showName: true }
+	]
+}];
+```
+
+and added with this simple code:
+
+```javascript
+textarea2 = mirrorMark(document.getElementById("textarea2"));
+textarea2.registerActions(customActions);
+textarea2.registerKeyMaps(customKeyMaps);
+textarea2.registerTools(customTools);
+textarea2.render();
+```
+</textarea>
+</div>
+</div>
+
+<div class="wrap tac">
+	MirrorMark built by <a href="http://www.twitter.com/andrewdelprete" class="btn" style="margin-left: .5%; margin-right: .5%;">Andrew Del Prete</a> at <a href="http://www.musicbed.com" class="btn" style="margin-left: .5%">Musicbed</a>
+</div>
+
+<!-- These are all required -->
+<script src="./js/mirrormark.package.js"></script>
+
+<script>
+	textarea1 = mirrorMark(document.getElementById("textarea1"), { autofocus: true });
+	textarea1.render();
+
+	var customActions = {
+		"potatoes": function potatoes() {
+			this.insert('![](https://33.media.tumblr.com/0de5ab0292ffc8dc7813e07978f89734/tumblr_n2patsaCTX1tvizo2o1_500.gif)');
+		},
+		"neverGoingToGiveYouUp": function neverGoingToGiveYouUp() {
+			this.insert([
+				"## You know you love it!",
+				'<iframe width="420" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>',
+			]);
+		}
+	}
+
+	var customKeyMaps = {
+		// We magicically replace Cmd with Ctrl if you are normal and don't use a Mac
+		"Shift-Cmd-Alt-1": "potatoes",
+		"Shift-Cmd-Alt-1": "neverGoingToGiveYouUp",
+	};
+
+	var customTools = [{
+		name: "more-actions",
+		action: null,
+		className: "fa fa-fighter-jet",
+		// Hey look, dropdowns
+		nested: [
+			{ name: "Click me!", action: "potatoes",showName: true },
+			{ name: "No, click me!", action: "neverGoingToGiveYouUp", showName: true }
+		]
+	}];
+
+	textarea2 = mirrorMark(document.getElementById("textarea2"));
+	textarea2.registerActions(customActions);
+	textarea2.registerKeyMaps(customKeyMaps);
+	textarea2.registerTools(customTools);
+	textarea2.render();
+</script>
+</body>
+</html>

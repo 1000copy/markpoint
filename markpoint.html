@@ -14,31 +14,14 @@
 		<link rel="stylesheet" href="lib/css/monokai.css">
 
 		<!-- Printing and PDF exports -->
-		<script>
-			
-		</script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link href="markedit/css/mirrormark.package.css" rel="stylesheet" />
 	</head>
 	<body>
 			
 			<div class="reveal">
 				<div class="slides" id="root">
-					<section data-markdown>
-# title
-
-	parent.postMessage("message1","*");
-	var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-	var eventer = window[eventMethod];
-	var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-	function a(){}
-					</section>
-				<section data-markdown>
-# title
-- b
-					</section>
-				<section data-markdown>
-# title
-- c
-					</section>
+				<section data-markdown></section>
 				</div>
 			</div>
 
@@ -131,23 +114,24 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 // Listen to message from child window
 var abcurl 
 eventer(messageEvent,function(e) {
-  console.log('from parent',e.data.substring(0,4))
+  // console.log('from parent',e.data.substring(0,4))
   if (e.data.substring(0,4)=='/pdf'){
-  	console.log('from parent',String(e.data))
   	location.href = e.data.substring(4)
   }else if (e.data.substring(0,4)=='/ppt'){
   	location.href = e.data.substring(4)
   }
   else{
-  	console.log(e.data)
+  	// console.log(e.data)
   	b(e.data)
   }
 },false);
 // console.log(root,elem)
 window.addEventListener('load', function() {
-	var newData = sessionStorage.data
-	if(newData)
+	var newData = localStorage.data
+	// console.log('pdfed',newData)
+	if(newData){
 		b(newData)
+	}
 });
 		</script>
 	</body>
