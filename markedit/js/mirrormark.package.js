@@ -11194,7 +11194,7 @@ else
 		render: function render() {
 			this.registerKeyMaps(this.keyMaps);
 			this.cm = CodeMirror.fromTextArea(this.element, this.options);
-
+      // console.log(this.options)
 			if (this.options.showToolbar) {
 			  this.setToolbar(this.tools);
 			}
