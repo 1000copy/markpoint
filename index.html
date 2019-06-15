@@ -6,12 +6,9 @@
 	<link href="markedit/css/mirrormark.package.css" rel="stylesheet" />
 
 	<style>
-		textarea{
-			width: 50%;
-		}
-		.editor{
-			width: 50%;
-			/*height: 100px;*/
+		i{
+			cursor: hand;
+
 		}
 		.CodeMirror {
 		  border: 1px solid #eee;
@@ -20,6 +17,9 @@
 		}
 		.CodeMirror-scroll {
 		  overflow-y: auto;
+		}
+		.editorwrapper{
+			width: 50%;
 		}
 		iframe{
 			width: 50%;
@@ -125,6 +125,7 @@
 	            <div class="SideMenu">
 	                <div class="Active"><a href="#">编辑</a></div>
 	                <div><a href="#" onclick="doClip()">剪贴</a></div>
+	                <div><a href="#" onclick="doplay()">播放</a></div>
 	                <div><a href="#" onclick="dopdf()">PDF</a></div>
 	                <div><a href="#" onclick="doAbout()">关于</a></div>
 	            </div>
@@ -142,12 +143,22 @@
 	            </ul>
 	        </div>
 	        <div class="WorkingBox">
+	        	<div class="editorwrapper">
+	        	<div>
+	        		Toolbar
+	        		<i class="fa fa-bold" onclick="dobold()"></i>
+	        		<i class="fa fa-italic"  onclick="doitalic()"></i>
+	        		<i class="fa fa-underline"  onclick="dounderline()"></i>
+	        		<i class="fa fa-strikethrough"  onclick="dostrikethrough()"></i>
+	        		<i class="fa fa-link"  onclick="dolink()"></i>
+	        		<i class="fa fa-image"  onclick="doimage()"></i>
+	        		<i class="fa fa-list-ul"  onclick="doul()"></i>
+	        		<i class="fa fa-list-ol"  onclick="dool()"></i>
+	        		<i class="fa fa-quote-left"  onclick="doquote()"></i>
+	        	</div>
 	        	<div class="editor" >
 	        	<textarea id= "markdown">
 # This is an H1
-
-
-
 # This is an url
 
 [google](http://google.com)
@@ -176,9 +187,8 @@
 * 2
 * 3
 
-# that is all folks
-
-	        	</textarea>
+# that is all folks</textarea>
+</div>
 </div>
 	        	<iframe  style="width:60%;display:inline-block;" id = "myframe"
 	width="400" height="100%" marginheight="0" marginwidth="0" src="./markpoint.html">
@@ -191,7 +201,7 @@
 	<script type="text/javascript">
 		function contentChange(html){
 			localStorage.data = html
-			console.log(localStorage.data)
+			// console.log(localStorage.data)
 			var GuideList = document.getElementById("GuideList")
 			var v = html
 			GuideList.innerHTML = ''
@@ -241,7 +251,7 @@
 		// Listen to message from child window
 		eventer(messageEvent,function(e) {
 		  if (e.data == 'message1'){
-		  	console.log('iframe loaded')
+		  	// console.log('iframe loaded')
 		  }
 		},false);
 		function onmarkdownchange(html){
@@ -276,6 +286,38 @@
 		   document.body.removeChild(el);
 		}
 		var t 
+		function dobold(){
+			insertText(t.cm,"****")
+		}
+		function doitalic(){}
+		function dounderline(){}
+		function dostrikethrough(){}
+		function dolink(){}
+		function doimage(){}
+		function doul(){}
+		function dool(){}
+		function doquote(){}
+		function insertText(cm,data) {
+			var doc = cm.getDoc();
+			var cursor = doc.getCursor(); // gets the line number in the cursor position
+
+			var line = doc.getLine(cursor.line); // get the line contents
+			var pos = {
+				line: cursor.line,
+				ch:cursor.ch,
+			};
+			if (line.length === 0) {
+				// check if the line is empty
+				// add the data
+				doc.replaceRange(data, pos);
+			} else {
+				// add a new line and the data
+				doc.replaceRange( data, pos);
+			}
+			cm.focus()
+			var cursor = doc.getCursor(); // gets the line number in the cursor 
+			cm.setCursor({line: cursor.line, ch: cursor.ch - 2})
+		}
 		function dopdf(){
 			// var markdown = document.getElementById('markdown')
 			// var v = markdown.value // not same as previos line
@@ -284,8 +326,20 @@
 			// https://stackoverflow.com/questions/31315327/how-to-make-sure-that-a-popup-window-is-fully-loaded-when-using-postmessage-api
 			localStorage.data = t.cm.getValue()
 			// localStorage.setItem('pdf',t.cm.getValue())
-			console.log('pdf',t.cm.getValue())
+			// console.log('pdf',t.cm.getValue())
 			var url = 'markpoint.html?print-pdf'
+			var w = window.open(url)
+		}
+		function doplay(){
+			// var markdown = document.getElementById('markdown')
+			// var v = markdown.value // not same as previos line
+			// var data = {age: 10};
+			// localStorage.data = JSON.stringify(data);
+			// https://stackoverflow.com/questions/31315327/how-to-make-sure-that-a-popup-window-is-fully-loaded-when-using-postmessage-api
+			localStorage.data = t.cm.getValue()
+			// localStorage.setItem('pdf',t.cm.getValue())
+			console.log('pdf',t.cm.getValue())
+			var url = 'markpoint.html'
 			var w = window.open(url)
 		}
 		function doAbout(){

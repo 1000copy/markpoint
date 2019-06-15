@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MirrorMark</title>
+	<!-- Custom fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+
+	<!-- These three are required -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link href="./css/mirrormark.package.css" rel="stylesheet" />
+<style type="text/css">
+	.editor{
+		width:50%;
+		border: 1px solid;
+		height: 200px;
+	}
+</style>
+	<!-- Our demo CSS -->
+
+</head>
+
+<body>
+<h1 style="margin-bottom: 1.5%">MirrorMark - Simple, yet extensible.</h1>
+<div class="editor">
+<textarea id="textarea1">
+# This is a main heading
+</textarea>
+</div>
+</div>
+<!-- These are all required -->
+<script src="./js/mirrormark.package.js"></script>
+
+<script>
+	textarea1 = mirrorMark(document.getElementById("textarea1"), { autofocus: true });
+	textarea1.render();
+</script>
+</body>
+</html>
