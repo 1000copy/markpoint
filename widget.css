@@ -40,7 +40,6 @@ i{
 
 .SectionBar {
     background-color: #f2f2f2;
-    
     max-width: 200px;
     min-width: 200px;
     border-right: 1px solid #ccc;
@@ -53,4 +52,8 @@ i{
     /*min-height: 500px;*/
     max-height: 100vh;
     overflow: auto;
+}
+i{
+    font-size: 23px;
+    padding: 8px;
 }
