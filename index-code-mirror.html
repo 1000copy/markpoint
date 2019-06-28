@@ -1,0 +1,502 @@
+<head>
+	<meta charset="UTF-8">
+	<title>MarkPoint - make Markdown to ppt</title>
+	<!-- These three are required -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link href="markedit/css/mirrormark.package.css" rel="stylesheet" />
+
+	<style>
+		i{
+			cursor: hand;
+
+		}
+		.CodeMirror {
+		  border: 1px solid #eee;
+		  min-height: 100vh;/*so 100vh is 100% of the viewport.*/
+		  overflow: auto;
+		}
+		.CodeMirror-scroll {
+		  overflow-y: auto;
+		}
+		.editorwrapper{
+			width: 50%;
+		}
+		iframe{
+			width: 50%;
+			height: 100%;
+		}
+		body {
+		    margin: 0;
+		    padding: 0;
+		    font-family: sans-serif;
+		}
+		.Container {
+		    display: flex;
+		    min-height: 100vh;
+		}
+		.SideBar {
+		    flex: 1 1;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    background-color: #363636;
+		    max-width: 100px;
+		    padding: 0;
+		}
+		.SideMenu>div.Active a {
+		    color: #fff;
+		    background-color: #2f2f2f;
+		}
+		.SideMenu > div:hover a
+		{
+		  background-color: #d84146;
+		  color:white;
+		}
+
+		.SideMenu>div a {
+		    display: block;
+		    padding: 20px;
+		    text-align: center;
+		    min-width: 100vw;
+		}
+		.SideMenu a {
+		    text-decoration: none;
+		}
+		.SideMenu, .SideMenu a {
+		    color: #999;
+		    font-size: 14px;
+		}
+		.LogoBox, .SideBar {
+		    -ms-flex: 1 1;
+		    flex: 1 1;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -ms-flex-direction: column;
+		    flex-direction: column;
+		    -ms-flex-align: center;
+		    align-items: center;
+		}
+		.SideMenu {
+		    margin: 0;
+		    padding: 0;
+		    display: flex;
+		    flex-direction: column;
+		    flex: 5 1;
+		    justify-content: flex-start;		    
+		}			
+		.SectionBar {
+		    background-color: #f2f2f2;
+		    -ms-flex: 2 1;
+		    flex: 2 1;
+		    max-width: 200px;
+		    min-width: 200px;
+		    border-right: 1px solid #ccc;
+		}
+		.WorkingBox {
+		    background-color: #f2f2f2;
+		    -ms-flex: 4 1;
+		    flex: 4 1;
+		    display: -ms-flexbox;
+		    display: flex;
+		}
+		.LogoText {
+		    color: #fff;
+		    font-size: 20px;
+		}
+		.GuideList{
+			/*min-height: 500px;*/
+			max-height: 100vh;
+			overflow: auto;
+		}
+		</style>
+	
+</head>
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div class="App">
+	    <div class="Container">
+	        <div class="SideBar">
+	            <div class="LogoBox">
+	                <!-- <h4 class="LogoText">MarkPoint</h4> -->
+	                <img src="blackcat.png" style="width: 100px;height: 100px;"/>
+	                <h2 class="LogoText">三脚猫演示</h2>
+
+	            </div>
+	            <div class="SideMenu">
+	                <div class="Active"><a href="#">编辑</a></div>
+	                <div><a href="#" onclick="doClip()">剪贴</a></div>
+	                <div><a href="#" onclick="doplay()">播放</a></div>
+	                <div><a href="#" onclick="dopdf()">PDF</a></div>
+	                <div><a href="#" onclick="doAbout()">关于</a></div>
+	            </div>
+	        </div>
+	        <div class="SectionBar">
+	            <div class="Editor Active">
+	                <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" viewBox="0 0 40 40" style="vertical-align: middle;">
+	                    <g>
+	                        <path d="m35.9 15v5h-5v11.6h-5v-11.6h-5v-5h15z m-31.8-8.4h21.8v5h-8.4v20h-5v-20h-8.4v-5z"></path>
+	                    </g>
+	                </svg>Markdown</div>
+	            <div class="Spacer">页面导航</div>
+	            <ul class="GuideList" id="GuideList">
+	            
+	            </ul>
+	        </div>
+	        <div class="WorkingBox">
+	        	<div class="editorwrapper">
+	        	<div>
+	        		Toolbar
+	        		<i class="fa fa-bold" onclick="dobold()"></i>
+	        		<i class="fa fa-italic"  onclick="doitalic()"></i>
+	        		<i class="fa fa-underline"  onclick="dounderline()"></i>
+	        		<i class="fa fa-strikethrough"  onclick="dostrikethrough()"></i>
+	        		<i class="fa fa-link"  onclick="dolink()"></i>
+	        		<i class="fa fa-image"  onclick="doimage()"></i>
+	        		<i class="fa fa-list-ul"  onclick="doul()"></i>
+	        		<i class="fa fa-list-ol"  onclick="dool()"></i>
+	        		<i class="fa fa-quote-left"  onclick="doquote()"></i>
+	        	</div>
+	        	<div class="editor" >
+	        	<textarea id= "markdown">
+# This is an H1
+# This is an url
+
+[google](http://google.com)
+![](https://via.placeholder.com/150)
+
+
+# This is an img
+
+![](https://via.placeholder.com/150)
+
+
+# This is an font
+**bold**
+~~bold~~
+
+# This is an bullet
+
+- 1
+- 2
+- 3
+
+
+# This is an bullet 2
+
+* 1
+* 2
+* 3
+
+# that is all folks</textarea>
+</div>
+</div>
+	        	<iframe  style="width:60%;display:inline-block;" id = "myframe"
+	width="400" height="100%" marginheight="0" marginwidth="0" src="./markpoint.html">
+	  Fallback text here for unsupporting browsers, of which there are scant few.
+	</iframe>
+	        </div>
+
+	    </div>
+	</div>
+	<script type="text/javascript">
+		function contentChange(html){
+			localStorage.data = html
+			// console.log(localStorage.data)
+			var GuideList = document.getElementById("GuideList")
+			var v = html
+			GuideList.innerHTML = ''
+			var a = getTitles(v)
+			GuideList.innerHTML = guideList(a)
+			onmarkdownchange(html)
+		}
+		function guideList(titles){
+			var r = ''
+			for (var i = 0; i < titles.length; i++) {
+				var title = titles[i]
+				var t = `<li><a href="#" onclick='clicktitle("${title}");return false;'>${title}</a></li>`
+				r += t
+			}
+			return r
+		}
+		function getTitles(v){
+			var pages = v.split("#")
+			var results = []
+			for (var i = 1; i < pages.length; i++) {
+				var page = pages[i]
+				results.push(page.split("\n")[0])
+			}
+			return results
+		}
+		function clicktitle(title){
+			
+			// var markdown = document.getElementById("markdown")
+			// var start = markdown.value.indexOf(title)
+			// var end =  start + title.length
+			// markdown.focus()// 必须先设置焦点
+			// // markdown.selectionStart = start
+			// // markdown.selectionEnd = end
+			// markdown.setSelectionRange(start,end)
+			var cmEditor = t.cm
+			 var cursor = cmEditor.getSearchCursor(title , CodeMirror.Pos(cmEditor.firstLine(), 0), {caseFold: true, multiline: true});
+		     if(cursor.find(false)){ //move to that position.
+		       cmEditor.setSelection(cursor.from(), cursor.to());
+		       cmEditor.scrollIntoView({from: cursor.from(), to: cursor.to()}, 0);
+		       // jumpToLine(30)
+		     }
+		}
+		var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+		var eventer = window[eventMethod];
+		var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+		// Listen to message from child window
+		eventer(messageEvent,function(e) {
+		  if (e.data == 'message1'){
+		  	// console.log('iframe loaded')
+		  }
+		},false);
+		function onmarkdownchange(html){
+			
+			
+			// var markdown = document.getElementById('markdown')
+			// var v = markdown.value // not same as previos line
+			var v = html
+			var frame = document.getElementById('myframe'); 
+			frame.contentWindow.postMessage(v, '*');
+		}
+		
+		function doClip(){
+			var markdown = document.getElementById("markdown")
+			copyStringToClipboard(markdown.value)
+			alert('copied into clipboard')
+		}
+		function copyStringToClipboard (str) {
+		   // Create new element
+		   var el = document.createElement('textarea');
+		   // Set value (string to be copied)
+		   el.value = str;
+		   // Set non-editable to avoid focus and move outside of view
+		   el.setAttribute('readonly', '');
+		   el.style = {position: 'absolute', left: '-9999px'};
+		   document.body.appendChild(el);
+		   // Select text inside element
+		   el.select();
+		   // Copy text to clipboard
+		   document.execCommand('copy');
+		   // Remove temporary element
+		   document.body.removeChild(el);
+		}
+		var t 
+		function dobold(){
+			insertText(t.cm,"****")
+			back(t.cm,2)
+		}
+		function doitalic(){
+			insertText(t.cm,"**")
+			back(t.cm,1)
+		}
+		function dounderline(){
+			insertText(t.cm,"____")
+			back(t.cm,2)
+		}
+		function dostrikethrough(){
+			insertText(t.cm,"~~~~")
+			back(t.cm,2)
+		}
+		function dolink(){
+			insertText(t.cm,"[]()")
+			back(t.cm,1)
+		}
+		function doimage(){
+			insertText(t.cm,"![]()")
+			back(t.cm,1)
+		}
+		function doul(){
+			insertText(t.cm,"\n* ")
+			back(t.cm,0)
+		}
+		function dool(){
+			insertText(t.cm,"\n1. ")
+			back(t.cm,0)
+		}
+		function doquote(){
+			insertText(t.cm,"\n> ")
+			back(t.cm,0)
+		}
+		function insertText(cm,data) {
+			var doc = cm.getDoc();
+			var cursor = doc.getCursor(); // gets the line number in the cursor position
+
+			var line = doc.getLine(cursor.line); // get the line contents
+			var pos = {
+				line: cursor.line,
+				ch:cursor.ch,
+			};
+			if (line.length === 0) {
+				// check if the line is empty
+				// add the data
+				doc.replaceRange(data, pos);
+			} else {
+				// add a new line and the data
+				doc.replaceRange( data, pos);
+			}
+			cm.focus()
+			
+		}
+		function back(cm,i){
+			var doc = cm.getDoc();
+			var cursor = doc.getCursor(); 
+			cm.setCursor({line: cursor.line, ch: cursor.ch - i})	
+		}
+		function dopdf(){
+			// var markdown = document.getElementById('markdown')
+			// var v = markdown.value // not same as previos line
+			// var data = {age: 10};
+			// localStorage.data = JSON.stringify(data);
+			// https://stackoverflow.com/questions/31315327/how-to-make-sure-that-a-popup-window-is-fully-loaded-when-using-postmessage-api
+			localStorage.data = t.cm.getValue()
+			// localStorage.setItem('pdf',t.cm.getValue())
+			// console.log('pdf',t.cm.getValue())
+			var url = 'markpoint.html?print-pdf'
+			var w = window.open(url)
+		}
+		function doplay(){
+			// var markdown = document.getElementById('markdown')
+			// var v = markdown.value // not same as previos line
+			// var data = {age: 10};
+			// localStorage.data = JSON.stringify(data);
+			// https://stackoverflow.com/questions/31315327/how-to-make-sure-that-a-popup-window-is-fully-loaded-when-using-postmessage-api
+			localStorage.data = t.cm.getValue()
+			// localStorage.setItem('pdf',t.cm.getValue())
+			console.log('pdf',t.cm.getValue())
+			var url = 'markpoint.html'
+			var w = window.open(url)
+		}
+		function doAbout(){
+			alert('By ChenCat')
+		}
+	</script>
+	<script src="markedit/js/mirrormark.package.js"></script>
+
+	<script>
+		// var options = {addModeClass: true,
+		// autoCloseBrackets: true,
+		// autoCloseTags: true,
+		// autofocus: true,
+		// indentWithTabs: true,
+		// lineWrapping: true,
+		// mode: "gfm",
+		// showToolbar: true,
+		// tabSize: "2"
+		// }
+	var options = { 
+			  autofocus: true ,
+			  scrollbarStyle: "native",
+			  lineNumbers: true,
+			  scrollbarsClipped:true,
+			  mode:""
+			}
+		var t = {}
+	    t.cm = CodeMirror.fromTextArea(document.getElementById("markdown"), options);
+		// t = mirrorMark(document.getElementById("markdown"), 
+		// 	{ 
+		// 	  autofocus: true ,
+		// 	  scrollbarStyle: "native",
+		// 	  lineNumbers: true,
+		// 	  scrollbarsClipped:true
+		// 	});
+		// t.scrollbarsClipped = true
+		// t.render();
+		t.cm.on('change', function () {
+	        html = t.cm.getValue();
+	        // console.log(html)
+	        contentChange(html)
+	    })
+	    if (localStorage.data){
+	    	// console.log('localStorage')
+	    	html = localStorage.data
+	    	t.cm.setValue(html)
+	    }
+	    else{
+	    	html = t.cm.getValue();
+	    }
+		contentChange(html)
+		// console.log('scrollbarStyle,',CodeMirror.scrollbarStyle)
+		// CodeMirror.scrollbarStyle = 'native'
+		// CodeMirror.viewportMargin = 20
+		// console.log('scrollbarStyle,',CodeMirror.scrollbarStyle)
+	</script>
+	<style type="text/css">
+	/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ul, ol, li
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* Elements */
+a {
+	color: gray;
+	text-decoration: none;
+}
+a:hover {
+	color: black;
+}
+
+body {
+	font-family: 'Merriweather', serif;
+}
+
+h1 {
+ 	font-size: 3rem;
+}
+
+h2 {
+ 	font-size: 2rem;
+}
+
+
+</style>
