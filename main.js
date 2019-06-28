@@ -10,8 +10,10 @@ function createWindow () {
     }
   })
   win.maximize()
+  // console.log(a())
   // and load the index.html of the app.
   win.loadFile('index.html')
 }
 
 app.on('ready', createWindow)
+

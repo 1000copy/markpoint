@@ -171,7 +171,7 @@ if (localStorage.data){
 	t.cm.value = html
 }
 else{
-	html = t.cm.getValue();
+	html = t.cm.value
 }
 // html = t.cm.value
 // contentChange(html)
