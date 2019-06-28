@@ -59,14 +59,14 @@
 function MarkdownToArray(markdown){
   return markdown.split('-----')
 }
-function MarkdownToArray(markdown){
-  var ms = markdown.split('\n#')
-  var i = 0
-  for (var i = 0; i < ms.length; i++) {
-  	if (i > 0) ms[i] = '#' + ms[i]
-  }
-  return ms
-}
+// function MarkdownToArray(markdown){
+//   var ms = markdown.split('\n#')
+//   var i = 0
+//   for (var i = 0; i < ms.length; i++) {
+//   	if (i > 0) ms[i] = '#' + ms[i]
+//   }
+//   return ms
+// }
 function b(markdown){
 
 	var ms = MarkdownToArray(markdown)

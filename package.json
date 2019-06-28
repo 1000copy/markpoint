@@ -1,0 +1,26 @@
+{
+  "name": "markpoint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1000copy/markpoint.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1000copy/markpoint/issues"
+  },
+  "homepage": "https://github.com/1000copy/markpoint#readme",
+  "devDependencies": {
+    "electron": "^5.0.6"
+  }
+}

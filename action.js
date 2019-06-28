@@ -36,16 +36,16 @@ function clicktitle(title){
 	// markdown.selectionEnd = end
 	markdown.setSelectionRange(start,end)
 }
-var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-var eventer = window[eventMethod];
-var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+// var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+// var eventer = window[eventMethod];
+// var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
-// Listen to message from child window
-eventer(messageEvent,function(e) {
-	if (e.data == 'message1'){
-	// console.log('iframe loaded')
-	}
-},false);
+// // Listen to message from child window
+// eventer(messageEvent,function(e) {
+// 	if (e.data == 'message1'){
+// 	// console.log('iframe loaded')
+// 	}
+// },false);
 function onmarkdownchange(html){
 	
 	
@@ -179,33 +179,35 @@ t.cm.onkeypress()
 if (!t.cm.value){
 	// return
 	t.cm.value =`# This is an H1
-	# This is an url
-	
-	[google](http://google.com)
-	![](https://via.placeholder.com/150)
-	
-	
-	# This is an img
-	
-	![](https://via.placeholder.com/150)
-	
-	
-	# This is an font
-	**bold**
-	~~bold~~
-	
-	# This is an bullet
-	
-	- 1
-	- 2
-	- 3
-	
-	
-	# This is an bullet 2
-	
-	* 1
-	* 2
-	* 3
-	
-	# that is all folks`
+-----
+# This is an url
+
+[google](http://google.com)
+![](https://via.placeholder.com/150)
+
+-----
+# This is an img
+
+![](https://via.placeholder.com/150)
+
+-----
+# This is an font
+**bold**
+~~bold~~
+-----
+# This is an bullet
+
+- 1
+- 2
+- 3
+
+-----
+
+# This is an bullet 2
+
+* 1
+* 2
+* 3
+-----
+# that is all folks`
 }
