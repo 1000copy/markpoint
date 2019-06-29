@@ -11,4 +11,4 @@ So lets go ahead and install it. Run these commands in the terminal in the app f
 
 Now you can run this command from the terminal to build a package for mac:
 
-    electron-packager ./ markpoint --overwrite
+    electron-packager ./ markpoint --overwrite 
