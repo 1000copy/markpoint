@@ -88,3 +88,4 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+asset/action.min.js
