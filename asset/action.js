@@ -35,6 +35,17 @@ function clicktitle(title){
 	// markdown.selectionStart = start
 	// markdown.selectionEnd = end
 	markdown.setSelectionRange(start,end)
+	var line = markdown.value.substring(0,start).split('\n').length
+	Jump(markdown,line)
+}
+function Jump(ta,line)
+{
+//   var ta = document.getElementById("TextArea");
+	var rows = ta.value.split('\n').length
+	var lineHeight = ta.scrollHeight / rows ;
+	var delta = 20
+	var jump = (line - 1) * lineHeight - delta ;
+	ta.scrollTop = jump;
 }
 // var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 // var eventer = window[eventMethod];
