@@ -113,12 +113,18 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
 // Listen to message from child window
 var abcurl 
+function jumpPage(page){
+	// alert(page)
+	Reveal.slide(page)
+}
 eventer(messageEvent,function(e) {
   // console.log('from parent',e.data.substring(0,4))
   if (e.data.substring(0,4)=='/pdf'){
   	location.href = e.data.substring(4)
   }else if (e.data.substring(0,4)=='/ppt'){
   	location.href = e.data.substring(4)
+  }else if (e.data.substring(0,5)=='/page'){
+  	jumpPage(+e.data.substring(5))
   }
   else{
   	// console.log(e.data)

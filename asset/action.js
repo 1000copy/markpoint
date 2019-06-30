@@ -18,7 +18,7 @@ function guideList(titles){
 	return r
 }
 function getTitles(v){
-	var pages = v.split("#")
+	var pages = v.split(/[\n]*#/)
 	var results = []
 	for (var i = 1; i < pages.length; i++) {
 		var page = pages[i]
@@ -36,7 +36,14 @@ function clicktitle(title){
 	// markdown.selectionEnd = end
 	markdown.setSelectionRange(start,end)
 	var line = markdown.value.substring(0,start).split('\n').length
+	var page = markdown.value.substring(0,start).split('-----').length
 	Jump(markdown,line)
+	JumpPage(page-1)
+}
+function JumpPage(page){
+	var v = '/page'+page
+	var frame = document.getElementById('myframe'); 
+	frame.contentWindow.postMessage(v, '*');
 }
 function Jump(ta,line)
 {
