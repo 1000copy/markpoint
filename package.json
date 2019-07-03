@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "electron-packager ./ markpoint --overwrite"
+    "pack": "electron-packager ./ markpoint --overwrite",
+    "mangle": "mkdir -p dist/js && uglifyjs src/*.js -m --mangle-props -c toplevel -o dist/app.js&&cat dist/app.js "
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,8 @@
   "devDependencies": {
     "electron": "^5.0.6",
     "grunt": "^1.0.4",
-    "grunt-contrib-uglify-es": "^3.3.0"
+    "grunt-contrib-uglify-es": "^3.3.0",
+    "uglify-es": "^3.3.9",
+    "uglifyjs": "^2.4.11"
   }
 }
