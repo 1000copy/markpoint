@@ -132,4 +132,3 @@ Grunt 配置中， grunt-contrib-uglify 插件中的uglify 任务:
 
 用法都是类似的。
 
-5c96997f5c6150c61e157a7d2b4422b7 wx60d2bb1f9f2abb5d
